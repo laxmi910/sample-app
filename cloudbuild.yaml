@@ -8,12 +8,92 @@ steps:
   # Step 2: Build the Docker image for the Go application
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build Docker image'
-    args: ['build', '-t', 'us-east4-docker.pkg.dev/$PROJECT_ID/my-repository/hello-cloudbuild:<version>', '.']
+    args: ['build', '-t', ' 1  gcloud services enable container.googleapis.com     cloudbuild.googleapis.com 
+    2  export PROJECT_ID=$(gcloud config get-value project)
+    3  gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:$(gcloud projects describe $PROJECT_ID \
+--format="value(projectNumber)")@cloudbuild.gserviceaccount.com --role="roles/container.developer"
+    4  curl -sS https://webi.sh/gh | sh
+    5  gh auth login
+    6  gh api user -q ".login"
+    7  GITHUB_USERNAME=$(gh api user -q ".login")
+    8  git config --global user.name "${GITHUB_USERNAME}"
+    9  git config --global user.email "${USER_EMAIL}"
+   10  echo ${GITHUB_USERNAME}
+   11  curl -sS https://webi.sh/gh | sh
+   12  gh auth login
+   13  gh api user -q ".login"
+   14  GITHUB_USERNAME=$(gh api user -q ".login")
+   15  git config --global user.name "${GITHUB_USERNAME}"
+   16  git config --global user.email "${USER_EMAIL}"
+   17  echo ${GITHUB_USERNAME}
+   18  gcloud container clusters create hello-cluster --zone us-east4-c --release-channel regular --cluster-version 1.29 --enable-autoscaling --num-nodes 3 --min-nodes 2 --max-nodes 6 --enable-ip-alias
+   19  gcloud container clusters get-credentials hello-cluster --zone us-east4-c --project qwiklabs-gcp-03-fe057b50a190
+   20  kubectl create namespace prod
+   21  kubectl create namespace dev
+   22  git clone https://github.com/laxmi910/sample-app.git
+   23  ls
+   24  cd sample-app
+   25  cd ..
+   26  pwd
+   27  cd ~
+   28  gsutil cp -r gs://spls/gsp330/sample-app/* sample-app
+   29  cd sample-app
+   30  ls
+   31  export REGION="us-east4"
+   32  export ZONE="us-east4-c"
+   33  for file in sample-app/cloudbuild-dev.yaml sample-app/cloudbuild.yaml; do     sed -i "s/<your-region>/${REGION}/g" "$file";     sed -i "s/<your-zone>/${ZONE}/g" "$file"; done
+   34  export REGION="us-east4"
+   35  export ZONE="us-east4-c"
+   36  for file in sample-app/cloudbuild-dev.yaml sample-app/cloudbuild.yaml; do     sed -i "s/<your-region>/${REGION}/g" "$file";     sed -i "s/<your-zone>/${ZONE}/g" "$file"; done
+   37  ls
+   38  cd dev
+   39  export REGION="us-east4"
+   40  export ZONE="us-east4-c"
+   41  for file in sample-app/cloudbuild-dev.yaml sample-app/cloudbuild.yaml; do     sed -i "s/<your-region>/${REGION}/g" "$file";     sed -i "s/<your-zone>/${ZONE}/g" "$file"; done
+   42  cd ..
+   43  cd prod
+   44  export REGION="us-east4"
+   45  export ZONE="us-east4-c"
+   46  for file in sample-app/cloudbuild-dev.yaml sample-app/cloudbuild.yaml; do     sed -i "s/<your-region>/${REGION}/g" "$file";     sed -i "s/<your-zone>/${ZONE}/g" "$file"; done
+   47  cd ..
+   48  ls
+   49  cat cloudbuild-dev.yaml
+   50  cat cloudbuild.yaml
+   51  cd ..
+   52  export REGION="us-east4"
+   53  export ZONE="us-east4-c"
+   54  for file in sample-app/cloudbuild-dev.yaml sample-app/cloudbuild.yaml; do     sed -i "s/<your-region>/${REGION}/g" "$file";     sed -i "s/<your-zone>/${ZONE}/g" "$file"; done
+   55  cat
+   56  cat cloudbuild-dev.yaml
+   57  cat sample-app/cloudbuild.yaml
+   58  cd sample-app
+   59  git status
+   60  git add .
+   61  git commit -m "first commit with sample code"
+   62  git push -u origin master
+   63  git push origin master
+   64  git branch -a
+   65  git branch -M master
+   66  git branch -a
+   67  git push -u origin master
+   68  git checkout -b dev
+   69  git push -u origin de
+   70  git push -u origin dev
+   71  git branch -a
+   72  git status
+   73  git add .
+   74  git status
+   75  git commit -m "my first commit"
+   76  git push
+   77  kubectl expose development-deployment --type=LoadBalancer --name=dev-deployment-service --port 8080 --target-port=8080 -n dev
+   78  kubectl expose deployment development-deployment --type=LoadBalancer --name=dev-deployment-service --port 8080 --target-port=8080 -n dev
+   79  kubectl get service dev-deployment-service -n dev
+   80  history', '.']
 
   # Step 3: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push Docker image'
-    args: ['push', 'us-east4-docker.pkg.dev/$PROJECT_ID/my-repository/hello-cloudbuild:<version>']
+    args: ['push', 'us-east4-docker.pkg.dev/$PROJECT_ID/my-repository/hello-cloudbuild:v1.0']
 
   # Step 4: Apply the production deployment YAML file to the production namespace
   - name: 'gcr.io/cloud-builders/kubectl'
